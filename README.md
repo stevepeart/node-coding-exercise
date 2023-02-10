@@ -24,7 +24,9 @@ Within a standard Knack application there is a `versions` property which has 2 c
 
 #### Examples:
   `yarn dupefix ./mock_application.json ./clean_application.json`
+    OR
   `yarn dupefix ./mock_application.json ./clean_application.json --debug`
+    OR
   `yarn dupefix` - Will output a Usage message with help on how to run the script
 
 ### Testing the application
