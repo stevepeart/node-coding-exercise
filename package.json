@@ -1,0 +1,22 @@
+{
+  "name": "node-coding-exercise-master",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Steve Peart",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist --copy-files",
+    "watch": "babel src --watch --out-dir dist --copy-files --ignore __mocks__",
+    "test": "jest",
+    "dupefix": "node dist/index.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.20.12"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.4.2",
+    "jest": "^29.4.2"
+  }
+}
