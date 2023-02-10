@@ -1,34 +1,34 @@
-import usage from './lib/usage.js';
-import inputFileValidate from './lib/inputFileValidate.js';
-import readJson from './lib/readJson.js';
-import writeJson from './lib/writeJson.js';
-import processObjects from './lib/processObjects.js';
-import processScenes from './lib/processScenes.js';
+import usage from './lib/usage';
+import inputFileValidate from './lib/inputFileValidate';
+import readJson from './lib/readJson';
+import writeJson from './lib/writeJson';
+import processObjects from './lib/processObjects';
+import processScenes from './lib/processScenes';
 
 // Not clear from the instructions about what makes an entry "duplicate", this is based on assumption for now
 // Also not clear which duplicate ultimately should be kept,
 // possibly based on other values to determine precedence, assumed for now that it is not important
 
-// TODO:
-//   ReadMe doc for usage
-
 const args = process.argv;
 
+// First two args are reserved, gotta check there's at least 4
 if (args.length < 4) {
   usage();
   process.exit(1);
 }
 
-// Figure out command line args
+// Figure out command line args (quick and dirty version)
 const filteredArgs = args.filter(arg => arg !== '--debug');
 const isDebug = args.indexOf('--debug') > -1;
 const inputFilename = filteredArgs[2];
 const outputFilename = filteredArgs[3];
 
+// Check that the input file name is a valid usable file
 if (!inputFileValidate(inputFilename)) {
   process.exit(1);
 }
 
+// Parse and return JSON data into JS object
 const inputData = readJson(inputFilename);
 
 // Process for potential multiple versions? (Since it's an array)
@@ -41,24 +41,29 @@ let totalViews = 0;
 let totalObjects = 0;
 let totalScenes = 0;
 const newVersions = [];
+
+// Iterate over versions, and pull out objects and scenes for processing
 versions.forEach(version => {
   const objects = version?.objects || [];
   const scenes = version?.scenes || [];
   const dedupedObjects = processObjects(objects, isDebug);
   const dedupedScenes = processScenes(scenes, isDebug);
 
+  // Processed items get added
   newVersions.push({
     ...version,
     objects: dedupedObjects.objList,
     scenes: dedupedScenes.sceneList
   });
 
+  // Collecting totals for the various total fields at the top-level
   totalObjects = totalObjects + dedupedObjects.objList.length;
   totalScenes = totalScenes + dedupedScenes.sceneList.length;
   totalFields = totalFields + dedupedObjects.fieldTotal;
   totalViews = totalViews + dedupedScenes.viewTotal;
 });
 
+// Adding final data totals to output before writing to file
 finalOutput.versions = newVersions;
 finalOutput.object_count = totalObjects;
 finalOutput.scene_count = totalScenes;
@@ -69,6 +74,7 @@ if (isDebug) {
   console.log('Writing to file: ' + outputFilename);
 }
 
+// Writing the JSON output file
 if (!writeJson(outputFilename, finalOutput)) {
   process.exit(1);
 }
@@ -82,4 +88,5 @@ if (isDebug) {
   console.log("\tTotal Views:    " + totalViews);
 }
 
+// Exit cleanly
 process.exit(0);

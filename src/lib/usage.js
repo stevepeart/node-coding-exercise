@@ -1,3 +1,8 @@
+/**
+ * Displays usage message on the command line when arguments are missing
+ * @constructor
+ * @returns {boolean} - Returns true after printing to the console
+ */
 export const usage = () => {
   console.log(`
     usage: yarn dupefix [--debug] <input_filename> <output_filename>

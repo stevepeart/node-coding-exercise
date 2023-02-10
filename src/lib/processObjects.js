@@ -1,3 +1,9 @@
+/**
+ * Processes Knack "objects" found in "versions" from application schema
+ * @constructor
+ * @param {Array} objList - List of objects pulled from JSON data
+ * @returns {object} - Object containing de-duped "objects" and a new field total
+ */
 export const processObjects = (objList, isDebug = false) => {
   const reducedObjects = [...new Map(objList.map(v => [v.identifier, v])).values()];
   if (isDebug) {

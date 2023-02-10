@@ -1,3 +1,9 @@
+/**
+ * Processes Knack "scenes" found in "versions" from application schema
+ * @constructor
+ * @param {Array} sceneList - List of scenes pulled from JSON data
+ * @returns {object} - Object containing de-duped "scenes" and a new view total
+ */
 export const processScenes = (sceneList, isDebug = false) => {
   const reducedScenes = [...new Map(sceneList.map(v => [v.key, v])).values()];
   if (isDebug) {
