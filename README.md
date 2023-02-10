@@ -10,18 +10,23 @@ Within a standard Knack application there is a `versions` property which has 2 c
 1. `objects`: an array of Knack "objects" which contains "fields"
 2. `scenes`: an array of Knack "scenes" which contains "views"
 
-### Requirements
-- The code should be written in JS and utilize the Node.js framework
-- We expect tests (unit tests on business logic, etc. - whatever you are comfortable with)
-- We expect to see documentation in the form of a README
-- We're looking for code that would be easy to maintain
-- We're looking for code that would scale
+### Installation
+- Make sure you are using the latest NodeJS (Currently v19.6.0)
+- Clone this repository
+- From the project directory, run either `yarn` or `npm install`
+- To build the application, run `yarn build` or `npm run build`
+- If you want to make changes to the code, you can run `yarn watch` or `npm run watch` to have the build update when you save changes
 
-### Time
-We understand that you are busy and programming projects can take a long time. We advise spending 2 hours on the exercise and seeing where you get. If there are still open requirements at the end of the 2 hour period, feel free to outline what it would take to complete those in TODO comments inline in the code, or a list of notes on what you'd need to do finish things up. If you want to keep working and take things over the finish line, great.
+### Using the application
+- To de-dupe a Knack Application Schema:
+  - From the command line, run `yarn dupefix ./mock_application.json ./clean_application.json` or the npm equivalent
+  - Optionally, you can add the `--debug` flag to the command to see ouput of the results during the process
 
-### Notes
-- Leveraging 3rd party libraries/modules is perfectly fine
+#### Examples:
+  `yarn dupefix ./mock_application.json ./clean_application.json`
+  `yarn dupefix ./mock_application.json ./clean_application.json --debug`
+  `yarn dupefix` - Will output a Usage message with help on how to run the script
 
-### How to submit your solution
-- Please send us a zip or a tar of the `node-coding-exercise-master` directory which should include your application
+### Testing the application
+  - From the project root directory, run `yarn test` or `npm run test`
+  - Tests are written using Jest
